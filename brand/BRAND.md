@@ -1,12 +1,12 @@
 # Brand sheet: Soh Wei Yu
 
-> **Status: approved in part (Brand Lab round 1, 2026-11-08).** Colour and
+> **Status: approved in part (Brand Lab rounds 1-2, 2026-11-08).** Colour and
 > type are pulled from https://www.sohweiyu.com/ (the homepage's "blueprint"
 > theme). Captions, hooks and motifs below come from your Brand Lab ratings.
-> Still open: the serif accent face (round 2) and music.
+> Still open: the orange-emphasis versions (#31, #32, round 3) and music.
 >
 > Brand Lab: https://claude.ai/artifact/1f7A9NnLxVe7oDAgyJSdJY. Every sample
-> is a composition (`BrandLab01`-`BrandLab30`, `src/brand-lab/samples.tsx`);
+> is a composition (`BrandLab01`-`BrandLab32`, `src/brand-lab/samples.tsx`);
 > build from the kept ones.
 
 Preview: `brand-sheet.png` (the `BrandSheet` still, `src/BrandSheet.tsx`):
@@ -54,35 +54,49 @@ Retired: `legacyCoral #FF8C5A` / `#FF7043` (older parts of the site). Not used.
   Never for body copy or captions.
 - **Label / UI:** Plus Jakarta Sans 600-700.
 - **Caption face:** Plus Jakarta Sans 800 (see 3).
-- **Serif accent (on trial, round 2):** Instrument Serif, regular and italic,
-  after your two inspo images: the italic for the word that matters, with a
-  soft white glow over footage (`GLOW` in `src/brand-lab/samples.tsx`).
-  Closest free match to the inspo, not necessarily the exact font. Samples 21-30.
+- **Serif (kept, round 2):** Instrument Serif, regular and italic, after your
+  two inspo images. Over footage it carries a soft white glow (`GLOW` in
+  `src/brand-lab/samples.tsx`); the word that matters is the italic in brand
+  `orange` with a warm orange glow (`EMPH_ORANGE`). Closest free match to the
+  inspo, not necessarily the exact font.
+- **Don't mix the two faces inside one line** (#21, #22, #24, #25 dropped):
+  a line is either all serif or all sans.
 
 ## 3. Captions
 
-**Default: orange block (Brand Lab #1, kept).** Plus Jakarta Sans 800, 78px,
-casual lowercase, 1-3 words. The word being spoken sits on an `orange` block
-(2px corners, white text); the others are white with the skill's black outline
-(10px, painted behind the fill). Over a light ground, measure first
-(`caption-tone.py`) and switch the outline per the skill.
+**Default: glow serif (#23 kept, with your note → #31).** Instrument Serif,
+~104px, casual lowercase, 1-3 words, white with a soft glow; the key word in
+`orange` serif italic with a warm glow. No outline. Pick the key word per chunk
+(the one he leans on), at most one per chunk.
 
-- Paper chip (#3): maybe; a mixed-type retry is #24.
-- Dropped: dimension underline (#4). Too plain: the bare TikTok outline (#2);
-  use it only for brand deals.
-- On trial (round 2): serif italic emphasis words (#21-#24).
+- **Option: orange block (#1, kept in round 1).** Plus Jakarta Sans 800, the
+  spoken word on an `orange` block, others white with the skill's black
+  outline. Use it where the glow serif can't read: **a light ground behind the
+  caption band** (measure with `caption-tone.py`; above ~140 the glow vanishes).
+- Paper chip (#3): maybe, never resolved; the mixed retry (#24) was dropped.
+- Dropped: dimension underline (#4), mixed sans + serif lines (#21, #22).
+  Too plain: the bare TikTok outline (#2); brand deals only.
 
 Placement is measured per take (on the top of the mic windscreen, never on the
 chin), per `references/captions.md`.
 
 ## 4. Hooks and titles
 
-- **Hook: bracket card (#5, kept).** Plus Jakarta Sans 800 in `ink` on a white
-  card, 3px `orange` outline, corner brackets, static from frame 0, top ~y300.
-  On trial: serif italic payoff (#25), glowing serif with no card (#26).
-- **Title card: blueprint title (#8, kept).** The grid draws down, the headline
-  rises line by line, a dimension line and a hand-written note finish it.
-  On trial: serif payoff line (#27), serif headline (#28), cinematic word (#29).
+- **Hook default: glow serif (#26 kept → #32 with the orange payoff).**
+  Instrument Serif ~132px, white with glow, no card, top ~y290, static from
+  frame 0; the payoff phrase in `orange` italic.
+- **Hook option: bracket card (#5, kept in round 1)**, for light footage.
+  Its serif-payoff version (#25) was dropped.
+- **Cinematic word (#29, kept):** one giant glowing serif italic word over the
+  take for the line he leans on; captions hide while it is up (words appear once).
+- **Title card: blueprint title (#8, kept in round 1).** Sans only: the serif
+  title cards (#27, #28) read as too corporate.
+- **Sign-off (#30, kept):** "see you *next build.*" in glowing serif over the
+  take, the URL under it. Replaces the end card.
+
+**Direction from the notes:** "too corporate" came up three times (#20, #27,
+#28): buttons and serif type on paper cards. Big type goes over the footage,
+not on a paper card; paper stays for data and explainers.
 
 ## 5. Motifs
 
@@ -102,7 +116,7 @@ Always: blueprint paper (white ground, orange grid 24 / 120px), 2px corners,
 sparingly, the boxed **WY** monogram.
 
 **Retired (dropped in the Brand Lab):** grid wipe (#17), the corporate end card
-with buttons (#20). A sign-off replacement is on trial (#30).
+with buttons (#20), serif headline cards on paper (#27, #28).
 
 ## 6. Music (to confirm)
 

@@ -17,7 +17,10 @@ BANNER = {
     2: """<section class="banner"><h2>Round 2, from your notes</h2>
 <p><b>Kept from round 1:</b> orange-block captions (1), bracket card hook (5), blueprint title (8), stat counter, drafted bars, checklist (11-13), blueprint flow, screenshot callout, project spec (14-16), sheet slide (18), name tag (19). These go into your brand sheet.</p>
 <p><b>Dropped:</b> dimension underline (4), grid wipe (17), end card (20, too corporate). <b>Too plain:</b> TikTok outline (2).</p>
-<p><b>New this round:</b> a second typeface, Instrument Serif, mixed into your kept styles: serif italic for the word that matters, with a soft glow over footage, after your two inspo images. Sample 24 retries the paper chip (your maybe) and sample 30 replaces the end card.</p></section>""",
+<p><b>New this round:</b> a second typeface, Instrument Serif, mixed into your kept styles: serif italic for the word that matters, with a soft glow over footage, after your two inspo images. Sample 24 retries the paper chip (your maybe) and sample 30 replaces the end card.</p></section>""",    3: """<section class="banner"><h2>Round 3, from your notes</h2>
+<p><b>Kept in round 2:</b> glow serif captions (23), glow serif hook (26), cinematic word (29), sign-off (30). The serif is now part of your brand.</p>
+<p><b>Dropped:</b> the sans and serif mixes (21, 22, 24, 25) and the serif title cards (27, 28, too corporate).</p>
+<p><b>Changed, from your note on 23:</b> the key words are now brand orange (#C4470A) serif italic with a warm glow. Sample 32 gives the hook the same orange payoff so captions and hook match. Two samples only.</p></section>""",
 }
 
 DECIDES = {

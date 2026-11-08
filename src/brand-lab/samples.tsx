@@ -1118,6 +1118,58 @@ const SignOff: React.FC = () => {
   );
 };
 
+
+// ---- round 3: glow serif with orange emphasis (from round 2 note on #23) ----
+
+/** Brand orange emphasis over footage: orange fill, orange-tinted bloom so it reads on dark ground. */
+const ORANGE_GLOW = "0 0 8px rgba(196,71,10,0.65), 0 0 26px rgba(224,102,42,0.55), 0 0 64px rgba(255,140,90,0.32)";
+const EMPH_ORANGE: React.CSSProperties = { ...SERIF_IT, color: colors.orange, textShadow: ORANGE_GLOW };
+
+const GlowSerifLine: React.FC<{ top: number }> = ({ top }) => {
+  const { idx } = useCaptionIdx();
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 90,
+        right: 90,
+        top,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "baseline",
+        gap: 22,
+        fontSize: 104,
+        color: "#fff",
+        textShadow: GLOW,
+      }}
+    >
+      {idx.map((i) => (
+        <span key={i} style={EMPH.has(i) ? EMPH_ORANGE : SERIF}>
+          {LINE[i].t}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const CaptionGlowSerifOrange: React.FC = () => (
+  <StandIn>
+    <GlowSerifLine top={CAPTION_TOP - 20} />
+  </StandIn>
+);
+
+const HookGlowSerifOrange: React.FC = () => (
+  <StandIn>
+    <div style={{ position: "absolute", top: 290, left: 90, right: 90, textAlign: "center", color: "#fff", textShadow: GLOW }}>
+      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>Most apps die</div>
+      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>
+        for <span style={EMPH_ORANGE}>one reason</span>
+      </div>
+    </div>
+    <GlowSerifLine top={CAPTION_TOP - 20} />
+  </StandIn>
+);
+
 // ---------------------------------------------------------------------------
 
 export type Sample = {
@@ -1161,4 +1213,6 @@ export const SAMPLES: Sample[] = [
   { n: 28, group: "Title type", title: "Serif headline", note: "A full-screen serif line like your first inspo, with a sans label above.", frames: 80, component: TitleSerifCard, round: 2 },
   { n: 29, group: "Title type", title: "Cinematic word", note: "One giant glowing italic word over the take, like your second inspo. Captions hide while it's up.", frames: 90, component: CinematicWord, round: 2 },
   { n: 30, group: "CTA", title: "Sign-off", note: "Replaces the end card you dropped: a glowing serif goodbye over the take, no buttons.", frames: 80, component: SignOff, round: 2 },
+  { n: 31, group: "Captions", title: "Glow serif, orange words", note: "Your kept #23 with the key words in brand orange serif italic, as you asked.", frames: 96, component: CaptionGlowSerifOrange, round: 3 },
+  { n: 32, group: "Hooks", title: "Glow serif hook, orange", note: "Your kept #26 with the payoff in orange, over the new captions, so the two match.", frames: 90, component: HookGlowSerifOrange, round: 3 },
 ];
