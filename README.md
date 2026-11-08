@@ -13,7 +13,7 @@ Remotion project for vertical short-form reels: **1080x1920 @ 30fps**.
 
 ```bash
 npm install
-npm run setup:whisper   # clones + builds bin/whisper.cpp and downloads the base.en model
+npm run setup:whisper   # clones + builds bin/whisper.cpp, downloads base.en + small models
 npx hyperframes doctor  # checks Chrome, ffmpeg etc. for HyperFrames
 ```
 
@@ -27,7 +27,7 @@ npx hyperframes doctor  # checks Chrome, ffmpeg etc. for HyperFrames
 | `npm run lint` | ESLint + TypeScript check |
 
 `transcribe` writes `[{ "text", "startMs", "endMs" }, ...]`, one entry per word,
-to `<file>.json` next to the input unless an output path is given.
+to `<file>.words.json` next to the input unless an output path is given.
 Set `WHISPER_MODEL` (e.g. `small.en`) to use a different downloaded model.
 
 ## Layout
@@ -42,6 +42,13 @@ public/images/
 public/sound pack/       SFX
 public/music pack/       background music
 hyperframes/             HyperFrames HTML compositions
-brand/                   logos, fonts, colours
+brand/                   brand sheet (BRAND.md), tokens, theme code
 out/                     rendered videos (git-ignored)
 ```
+
+## Editing workflow
+
+Reels are edited with the project skill in `.claude/skills/remotion-reel/`
+(Claude Code loads it automatically in this repo). It reads the brand sheet at
+`brand/BRAND.md`. Its Python scripts need `numpy` and `pillow`
+(`pip3 install numpy pillow`).

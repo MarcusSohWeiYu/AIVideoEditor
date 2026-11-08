@@ -1,6 +1,6 @@
 import { loadFont } from "@remotion/fonts";
 import { staticFile } from "remotion";
-import tokens from "../brand/brand.json";
+import tokens from "./brand.json";
 
 /** Brand tokens from brand/brand.json (pulled from sohweiyu.com). */
 export const brand = tokens;

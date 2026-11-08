@@ -1,5 +1,5 @@
 import { AbsoluteFill } from "remotion";
-import { blueprintPaper, brand, colors, fonts, loadBrandFonts, type } from "./brand";
+import { blueprintPaper, brand, colors, fonts, loadBrandFonts, type } from "../brand/theme";
 
 loadBrandFonts();
 

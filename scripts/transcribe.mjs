@@ -8,7 +8,7 @@
  * Usage:
  *   node scripts/transcribe.mjs <input.mp4> [output.json]
  *
- * Output defaults to <input>.json next to the input file.
+ * Output defaults to <input>.words.json next to the input file.
  * Env overrides: WHISPER_MODEL (default base.en), WHISPER_THREADS.
  */
 import { spawnSync } from "node:child_process";
@@ -44,7 +44,7 @@ if (!existsSync(WHISPER_CLI)) die(`whisper-cli not found at ${WHISPER_CLI} — b
 if (!existsSync(MODEL)) die(`model not found at ${MODEL} — run bin/whisper.cpp/models/download-ggml-model.sh base.en`);
 
 const output =
-  outArg ?? path.join(path.dirname(input), `${path.parse(input).name}.json`);
+  outArg ?? path.join(path.dirname(input), `${path.parse(input).name}.words.json`);
 const tmp = mkdtempSync(path.join(tmpdir(), "transcribe-"));
 
 try {
