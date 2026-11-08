@@ -1,6 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Brackets, DimLine, Grain, Monogram, Outlined, Paper, StandIn } from "../../brand/components";
+import { GlowCaption, GlowHook } from "../../brand/captions";
 import { brand, colors, fonts, loadBrandFonts, type } from "../../brand/theme";
 
 loadBrandFonts();
@@ -1121,35 +1122,9 @@ const SignOff: React.FC = () => {
 
 // ---- round 3: glow serif with orange emphasis (from round 2 note on #23) ----
 
-/** Brand orange emphasis over footage: orange fill, orange-tinted bloom so it reads on dark ground. */
-const ORANGE_GLOW = "0 0 8px rgba(196,71,10,0.65), 0 0 26px rgba(224,102,42,0.55), 0 0 64px rgba(255,140,90,0.32)";
-const EMPH_ORANGE: React.CSSProperties = { ...SERIF_IT, color: colors.orange, textShadow: ORANGE_GLOW };
-
 const GlowSerifLine: React.FC<{ top: number }> = ({ top }) => {
   const { idx } = useCaptionIdx();
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 90,
-        right: 90,
-        top,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "baseline",
-        gap: 22,
-        fontSize: 104,
-        color: "#fff",
-        textShadow: GLOW,
-      }}
-    >
-      {idx.map((i) => (
-        <span key={i} style={EMPH.has(i) ? EMPH_ORANGE : SERIF}>
-          {LINE[i].t}
-        </span>
-      ))}
-    </div>
-  );
+  return <GlowCaption top={top} words={idx.map((i) => ({ text: LINE[i].t, emph: EMPH.has(i) }))} />;
 };
 
 const CaptionGlowSerifOrange: React.FC = () => (
@@ -1160,12 +1135,7 @@ const CaptionGlowSerifOrange: React.FC = () => (
 
 const HookGlowSerifOrange: React.FC = () => (
   <StandIn>
-    <div style={{ position: "absolute", top: 290, left: 90, right: 90, textAlign: "center", color: "#fff", textShadow: GLOW }}>
-      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>Most apps die</div>
-      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>
-        for <span style={EMPH_ORANGE}>one reason</span>
-      </div>
-    </div>
+    <GlowHook lines={[[{ text: "Most apps die" }], [{ text: "for " }, { text: "one reason", emph: true }]]} />
     <GlowSerifLine top={CAPTION_TOP - 20} />
   </StandIn>
 );

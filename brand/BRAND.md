@@ -1,9 +1,9 @@
 # Brand sheet: Soh Wei Yu
 
-> **Status: approved in part (Brand Lab rounds 1-2, 2026-11-08).** Colour and
-> type are pulled from https://www.sohweiyu.com/ (the homepage's "blueprint"
-> theme). Captions, hooks and motifs below come from your Brand Lab ratings.
-> Still open: the orange-emphasis versions (#31, #32, round 3) and music.
+> **Status: approved (Brand Lab rounds 1-3, 2026-11-08).** Colour and type
+> are pulled from https://www.sohweiyu.com/ (the homepage's "blueprint"
+> theme). Captions, hooks and motifs below are your Brand Lab picks.
+> Still open: music.
 >
 > Brand Lab: https://claude.ai/artifact/1f7A9NnLxVe7oDAgyJSdJY. Every sample
 > is a composition (`BrandLab01`-`BrandLab32`, `src/brand-lab/samples.tsx`);
@@ -21,6 +21,7 @@ npx remotion still BrandSheet brand/brand-sheet.png
 | --- | --- |
 | `brand.json` | Source of truth: colours, fonts, type scale, shape |
 | `theme.ts` | Remotion: `colors`, `fonts`, `type.*`, `blueprintPaper`, `loadBrandFonts()` |
+| `captions.tsx` | Your caption and hook: `GlowCaption`, `GlowHook`, plus `GLOW`, `ORANGE_GLOW`, `EMPH_ORANGE` |
 | `components.tsx` | Shared brand pieces: blueprint `Paper` + grain, `Outlined` text, `Brackets`, `DimLine`, `Monogram` |
 | `brand.css` | HyperFrames / HTML: CSS variables, `@font-face`, `.bp-paper`, `.bp-display`, `.bp-hand` |
 | `../public/fonts/` | Self-hosted Plus Jakarta Sans (variable 200-800), Architects Daughter and Instrument Serif (regular + italic), all SIL OFL |
@@ -64,7 +65,7 @@ Retired: `legacyCoral #FF8C5A` / `#FF7043` (older parts of the site). Not used.
 
 ## 3. Captions
 
-**Default: glow serif (#23 kept, with your note → #31).** Instrument Serif,
+**Default: glow serif (#31, kept in round 3; `GlowCaption`).** Instrument Serif,
 ~104px, casual lowercase, 1-3 words, white with a soft glow; the key word in
 `orange` serif italic with a warm glow. No outline. Pick the key word per chunk
 (the one he leans on), at most one per chunk.
@@ -82,7 +83,7 @@ chin), per `references/captions.md`.
 
 ## 4. Hooks and titles
 
-- **Hook default: glow serif (#26 kept → #32 with the orange payoff).**
+- **Hook default: glow serif (#32, kept in round 3; `GlowHook`).**
   Instrument Serif ~132px, white with glow, no card, top ~y290, static from
   frame 0; the payoff phrase in `orange` italic.
 - **Hook option: bracket card (#5, kept in round 1)**, for light footage.
