@@ -9,3 +9,9 @@ out/*
 
 # whisper.cpp clone, build and model (recreate with: npm run setup:whisper)
 bin/whisper.cpp
+
+# Raw camera files: transcode to H.264 mp4 first (remotion-reel skill, step 1); commit only the mp4
+public/recordings/*.MOV
+public/recordings/*.mov
+public/screen-recordings/*.MOV
+public/screen-recordings/*.mov
