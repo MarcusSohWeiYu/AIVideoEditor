@@ -1,0 +1,47 @@
+{
+  "$source": "https://www.sohweiyu.com/ (homepage .bp-home theme), extracted 2026-11-08",
+  "name": "Soh Wei Yu",
+  "monogram": "WY",
+  "colors": {
+    "orange": "#c4470a",
+    "orangeDeep": "#a93b06",
+    "ink": "#21170f",
+    "inkSoft": "#62544a",
+    "paper": "#ffffff",
+    "paperWarm": "#fafafa",
+    "sheetEdge": "#e8b596",
+    "rule": "#f0dccf",
+    "gridMinor": "rgba(196, 71, 10, 0.06)",
+    "gridMajor": "rgba(196, 71, 10, 0.15)",
+    "legacyCoral": "#ff8c5a",
+    "legacyCoralHot": "#ff7043"
+  },
+  "fonts": {
+    "body": {
+      "family": "Plus Jakarta Sans",
+      "file": "fonts/PlusJakartaSans-Variable.woff2",
+      "weights": [300, 400, 500, 600, 700, 800],
+      "fallback": "\"Helvetica Neue\", Arial, sans-serif"
+    },
+    "hand": {
+      "family": "Architects Daughter",
+      "file": "fonts/ArchitectsDaughter-Regular.woff2",
+      "weights": [400],
+      "fallback": "\"Comic Sans MS\", \"Segoe Print\", cursive"
+    }
+  },
+  "type": {
+    "display": { "font": "body", "weight": 800, "lineHeight": 0.98, "letterSpacing": "-0.03em" },
+    "heading": { "font": "body", "weight": 800, "lineHeight": 1.05, "letterSpacing": "-0.02em" },
+    "subheading": { "font": "body", "weight": 700, "lineHeight": 1.3, "letterSpacing": "0" },
+    "body": { "font": "body", "weight": 400, "lineHeight": 1.6, "letterSpacing": "0" },
+    "label": { "font": "body", "weight": 600, "lineHeight": 1.3, "letterSpacing": "0" },
+    "annotation": { "font": "hand", "weight": 400, "lineHeight": 1.3, "letterSpacing": "0" }
+  },
+  "shape": {
+    "radius": 2,
+    "borderWidth": 1.5,
+    "gridMinorPx": 24,
+    "gridMajorPx": 120
+  }
+}

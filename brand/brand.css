@@ -1,0 +1,49 @@
+/* Soh Wei Yu brand tokens, for HyperFrames / HTML compositions.
+   Mirrors brand/brand.json. Font URLs are relative to this file. */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  src: url("../public/fonts/PlusJakartaSans-Variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: block;
+}
+@font-face {
+  font-family: "Architects Daughter";
+  src: url("../public/fonts/ArchitectsDaughter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-display: block;
+}
+
+:root {
+  --orange: #c4470a;
+  --orange-deep: #a93b06;
+  --ink: #21170f;
+  --ink-soft: #62544a;
+  --paper: #ffffff;
+  --paper-warm: #fafafa;
+  --sheet-edge: #e8b596;
+  --rule: #f0dccf;
+  --grid-minor: rgba(196, 71, 10, 0.06);
+  --grid-major: rgba(196, 71, 10, 0.15);
+
+  --font-body: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-hand: "Architects Daughter", "Comic Sans MS", "Segoe Print", cursive;
+
+  --radius: 2px;
+  --border: 1.5px;
+}
+
+/* Blueprint paper: 24px minor grid, 120px major grid. */
+.bp-paper {
+  background:
+    linear-gradient(var(--grid-major) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px) 0 0 / 120px 120px,
+    linear-gradient(var(--grid-minor) 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px) 0 0 / 24px 24px,
+    var(--paper);
+  color: var(--ink);
+  font: 400 1rem/1.6 var(--font-body);
+}
+.bp-display { font-weight: 800; line-height: 0.98; letter-spacing: -0.03em; }
+.bp-heading { font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+.bp-hand { font-family: var(--font-hand); font-weight: 400; color: var(--orange-deep); }
+.bp-accent { color: var(--orange); }
