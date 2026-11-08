@@ -9,6 +9,7 @@ export const colors = tokens.colors;
 export const fonts = {
   body: `"${tokens.fonts.body.family}", ${tokens.fonts.body.fallback}`,
   hand: `"${tokens.fonts.hand.family}", ${tokens.fonts.hand.fallback}`,
+  serif: `"${tokens.fonts.serif.family}", ${tokens.fonts.serif.fallback}`,
 } as const;
 
 /** Text styles matching the website's type scale. Spread into `style`. */
@@ -49,6 +50,18 @@ export const loadBrandFonts = () => {
       family: tokens.fonts.hand.family,
       url: staticFile(tokens.fonts.hand.file),
       weight: "400",
+    }),
+    loadFont({
+      family: tokens.fonts.serif.family,
+      url: staticFile(tokens.fonts.serif.file),
+      weight: "400",
+      style: "normal",
+    }),
+    loadFont({
+      family: tokens.fonts.serif.family,
+      url: staticFile(tokens.fonts.serif.italicFile),
+      weight: "400",
+      style: "italic",
     }),
   ]);
   return fontsLoaded;

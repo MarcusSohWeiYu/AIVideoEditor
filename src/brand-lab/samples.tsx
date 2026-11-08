@@ -827,6 +827,297 @@ const EndCard: React.FC = () => {
   );
 };
 
+// ---- round 2: mixed type (Plus Jakarta Sans + Instrument Serif) --------------
+
+/** Soft white bloom for serif type over footage. Glow belongs to the type, never the background. */
+const GLOW = "0 0 10px rgba(255,255,255,0.55), 0 0 28px rgba(255,236,214,0.45), 0 0 64px rgba(255,214,180,0.28)";
+const SERIF_IT: React.CSSProperties = { fontFamily: fonts.serif, fontStyle: "italic", fontWeight: 400, letterSpacing: "-0.01em" };
+const SERIF: React.CSSProperties = { fontFamily: fonts.serif, fontStyle: "normal", fontWeight: 400, letterSpacing: "-0.01em" };
+const EMPH = new Set([2, 4, 5]); // LINE indices that get the serif: "die", "nobody", "actually"
+
+const useCaptionIdx = () => {
+  const f = useCurrentFrame();
+  let chunk = CHUNKS[0];
+  for (const c of CHUNKS) if (f >= LINE[c[0]].f) chunk = c;
+  const idx = Array.from({ length: chunk[1] - chunk[0] }, (_, i) => chunk[0] + i);
+  let active = idx[0];
+  for (const i of idx) if (f >= LINE[i].f) active = i;
+  return { idx, active };
+};
+
+const SerifWord: React.FC<{ children: string; scale?: number; glow?: boolean; color?: string }> = ({
+  children,
+  scale = 1.3,
+  glow = true,
+  color = "#fff",
+}) => (
+  <span style={{ ...SERIF_IT, fontSize: `${scale}em`, lineHeight: 0.8, color, textShadow: glow ? GLOW : undefined }}>{children}</span>
+);
+
+const CaptionSerifEmphasis: React.FC = () => {
+  const { idx } = useCaptionIdx();
+  return (
+    <StandIn>
+      <CaptionRow gap={16}>
+        {idx.map((i) => (EMPH.has(i) ? <SerifWord key={i}>{LINE[i].t}</SerifWord> : <Outlined key={i}>{LINE[i].t}</Outlined>))}
+      </CaptionRow>
+    </StandIn>
+  );
+};
+
+const CaptionBlockSerif: React.FC = () => {
+  const { idx, active } = useCaptionIdx();
+  return (
+    <StandIn>
+      <CaptionRow gap={14}>
+        {idx.map((i) => {
+          const serif = EMPH.has(i);
+          if (i === active)
+            return (
+              <span
+                key={i}
+                style={{
+                  background: colors.orange,
+                  color: colors.paper,
+                  padding: serif ? "0 16px 6px" : "0 14px",
+                  borderRadius: brand.shape.radius,
+                  ...(serif ? { ...SERIF_IT, fontSize: "1.2em", lineHeight: 0.95 } : {}),
+                }}
+              >
+                {LINE[i].t}
+              </span>
+            );
+          return serif ? <SerifWord key={i} scale={1.2}>{LINE[i].t}</SerifWord> : <Outlined key={i}>{LINE[i].t}</Outlined>;
+        })}
+      </CaptionRow>
+    </StandIn>
+  );
+};
+
+const CaptionGlowSerif: React.FC = () => {
+  const { idx } = useCaptionIdx();
+  return (
+    <StandIn>
+      <div
+        style={{
+          position: "absolute",
+          left: 90,
+          right: 90,
+          top: CAPTION_TOP - 20,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "baseline",
+          gap: 22,
+          fontSize: 104,
+          color: "#fff",
+          textShadow: GLOW,
+        }}
+      >
+        {idx.map((i) => (
+          <span key={i} style={EMPH.has(i) ? SERIF_IT : SERIF}>
+            {LINE[i].t}
+          </span>
+        ))}
+      </div>
+    </StandIn>
+  );
+};
+
+const HookCardMixed: React.FC = () => (
+  <StandIn>
+    <div style={{ position: "absolute", top: 300, left: 0, right: 0, display: "flex", justifyContent: "center" }}>
+      <div
+        style={{
+          position: "relative",
+          background: colors.paper,
+          border: `3px solid ${colors.orange}`,
+          borderRadius: brand.shape.radius,
+          padding: "16px 44px 22px",
+          textAlign: "center",
+          color: colors.ink,
+          ...type.heading,
+          fontSize: 76,
+          boxShadow: CARD_SHADOW,
+        }}
+      >
+        <div>Most apps die</div>
+        <div>
+          for <span style={{ ...SERIF_IT, fontSize: "1.3em", lineHeight: 0.85, color: colors.orangeDeep }}>one reason</span>
+        </div>
+        <Brackets offset={16} arm={34} width={4} />
+      </div>
+    </div>
+    <CaptionRow>
+      <Outlined>{useCaption().words.map((w) => w.t).join(" ")}</Outlined>
+    </CaptionRow>
+  </StandIn>
+);
+
+const HookGlowSerif: React.FC = () => (
+  <StandIn>
+    <div style={{ position: "absolute", top: 290, left: 90, right: 90, textAlign: "center", color: "#fff", textShadow: GLOW }}>
+      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>Most apps die</div>
+      <div style={{ ...SERIF, fontSize: 132, lineHeight: 0.95 }}>
+        for <span style={SERIF_IT}>one reason</span>
+      </div>
+    </div>
+    <CaptionRow>
+      <Outlined>{useCaption().words.map((w) => w.t).join(" ")}</Outlined>
+    </CaptionRow>
+  </StandIn>
+);
+
+const TitleSerifCard: React.FC = () => {
+  const f = useCurrentFrame();
+  const sp = useSp();
+  return (
+    <Paper>
+      <div style={{ position: "absolute", left: 100, right: 90, top: 640 }}>
+        <div
+          style={{
+            ...type.label,
+            fontWeight: 800,
+            fontSize: 34,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: colors.orangeDeep,
+            clipPath: `inset(0 ${(1 - ramp(f, 0, 14)) * 100}% 0 0)`,
+          }}
+        >
+          ApplyWise
+        </div>
+        <Rise p={sp(4)} style={{ ...SERIF, fontSize: 186, lineHeight: 0.95, color: colors.ink }}>
+          Tailor every
+        </Rise>
+        <Rise p={sp(12)} style={{ ...SERIF_IT, fontSize: 186, lineHeight: 0.95, color: colors.orange }}>
+          application.
+        </Rise>
+        <Rise p={sp(26)} style={{ ...type.subheading, fontSize: 44, color: colors.inkSoft, marginTop: 28 }}>
+          without inventing anything
+        </Rise>
+      </div>
+    </Paper>
+  );
+};
+
+const CinematicWord: React.FC = () => {
+  const f = useCurrentFrame();
+  const sp = useSp();
+  const push = 1 + 0.05 * ramp(f, 0, 90, Easing.out(Easing.sin));
+  return (
+    <StandIn>
+      <AbsoluteFill style={{ display: "grid", placeItems: "center", transform: `scale(${push})` }}>
+        <div style={{ overflow: "hidden", padding: "0 20px 40px" }}>
+          <div
+            style={{
+              ...SERIF_IT,
+              fontSize: 250,
+              lineHeight: 1,
+              color: "#fff",
+              textShadow: GLOW,
+              transform: `translateY(${(1 - sp(0, SOFT)) * 110}%)`,
+            }}
+          >
+            software
+          </div>
+        </div>
+      </AbsoluteFill>
+    </StandIn>
+  );
+};
+
+const TitleBlueprintMixed: React.FC = () => {
+  const f = useCurrentFrame();
+  const sp = useSp();
+  const grid = ramp(f, 0, 22, Easing.out(Easing.cubic));
+  return (
+    <Paper gridReveal={grid}>
+      <div style={{ position: "absolute", left: 110, right: 100, top: 640 }}>
+        <Rise p={sp(6)} style={{ ...type.display, fontSize: 150, color: colors.ink }}>
+          Products
+        </Rise>
+        <Rise p={sp(12)} style={{ ...type.display, fontSize: 150, color: colors.ink }}>
+          people
+        </Rise>
+        <Rise p={sp(18)} style={{ ...SERIF_IT, fontSize: 168, lineHeight: 0.95, color: colors.orange, whiteSpace: "nowrap" }}>
+          actually use.
+        </Rise>
+        <div style={{ marginTop: 22 }}>
+          <DimLine width={760} progress={ramp(f, 26, 46)} thickness={4} />
+        </div>
+      </div>
+    </Paper>
+  );
+};
+
+const CaptionChipMixed: React.FC = () => {
+  const { idx } = useCaptionIdx();
+  return (
+    <StandIn>
+      <CaptionRow>
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "baseline",
+            gap: 16,
+            background: colors.paper,
+            color: colors.ink,
+            border: `3px solid ${colors.orange}`,
+            borderRadius: brand.shape.radius,
+            padding: "2px 26px 12px",
+            fontSize: 70,
+            boxShadow: CARD_SHADOW,
+          }}
+        >
+          {idx.map((i) =>
+            EMPH.has(i) ? (
+              <span key={i} style={{ ...SERIF_IT, fontSize: "1.3em", lineHeight: 0.85, color: colors.orangeDeep }}>
+                {LINE[i].t}
+              </span>
+            ) : (
+              <span key={i}>{LINE[i].t}</span>
+            ),
+          )}
+        </span>
+      </CaptionRow>
+    </StandIn>
+  );
+};
+
+const SignOff: React.FC = () => {
+  const f = useCurrentFrame();
+  const sp = useSp();
+  return (
+    <StandIn>
+      <div style={{ position: "absolute", top: 360, left: 90, right: 90, textAlign: "center", color: "#fff", textShadow: GLOW }}>
+        <Rise p={sp(0, SOFT)} style={{ ...SERIF, fontSize: 150, lineHeight: 0.95 }}>
+          see you
+        </Rise>
+        <Rise p={sp(8, SOFT)} style={{ ...SERIF_IT, fontSize: 150, lineHeight: 0.95 }}>
+          next build.
+        </Rise>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 1180,
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          ...type.label,
+          fontWeight: 700,
+          fontSize: 38,
+          letterSpacing: "0.04em",
+          color: "rgba(255,255,255,0.92)",
+          clipPath: `inset(0 ${(1 - ramp(f, 24, 40)) * 50}% 0 ${(1 - ramp(f, 24, 40)) * 50}%)`,
+        }}
+      >
+        sohweiyu.com
+      </div>
+    </StandIn>
+  );
+};
+
 // ---------------------------------------------------------------------------
 
 export type Sample = {
@@ -836,6 +1127,7 @@ export type Sample = {
   note: string;
   frames: number;
   component: React.FC;
+  round?: number; // review round it was introduced in (default 1)
 };
 
 export const SAMPLES: Sample[] = [
@@ -859,4 +1151,14 @@ export const SAMPLES: Sample[] = [
   { n: 18, group: "Transitions", title: "Sheet slide", note: "A sheet of blueprint paper with a ruler edge slides up over the take.", frames: 70, component: TransitionSheet },
   { n: 19, group: "Lower third", title: "Name tag", note: "Name and role open out of a bracketed tag, above the caption line.", frames: 90, component: LowerThird },
   { n: 20, group: "CTA", title: "End card", note: "Closing card: follow line, your site's two buttons, a click, and the URL.", frames: 90, component: EndCard },
+  { n: 21, group: "Captions", title: "Serif emphasis", note: "Kept captions, but the word that matters switches to a glowing serif italic.", frames: 96, component: CaptionSerifEmphasis, round: 2 },
+  { n: 22, group: "Captions", title: "Orange block + serif", note: "Your kept orange block (#1); emphasis words become serif italic, on the block when spoken.", frames: 96, component: CaptionBlockSerif, round: 2 },
+  { n: 23, group: "Captions", title: "Glow serif", note: "All serif, lowercase, soft white glow, italic for the key word. Closest to your inspo.", frames: 96, component: CaptionGlowSerif, round: 2 },
+  { n: 24, group: "Captions", title: "Paper chip, mixed", note: "Your maybe (#3) with the key word in orange serif italic.", frames: 96, component: CaptionChipMixed, round: 2 },
+  { n: 25, group: "Hooks", title: "Bracket card, mixed", note: "Your kept hook (#5) with the payoff in serif italic.", frames: 90, component: HookCardMixed, round: 2 },
+  { n: 26, group: "Hooks", title: "Glow serif hook", note: "No card: big condensed serif with a soft glow, italic payoff.", frames: 90, component: HookGlowSerif, round: 2 },
+  { n: 27, group: "Title type", title: "Blueprint title, mixed", note: "Your kept title (#8) with the payoff line in big serif italic.", frames: 90, component: TitleBlueprintMixed, round: 2 },
+  { n: 28, group: "Title type", title: "Serif headline", note: "A full-screen serif line like your first inspo, with a sans label above.", frames: 80, component: TitleSerifCard, round: 2 },
+  { n: 29, group: "Title type", title: "Cinematic word", note: "One giant glowing italic word over the take, like your second inspo. Captions hide while it's up.", frames: 90, component: CinematicWord, round: 2 },
+  { n: 30, group: "CTA", title: "Sign-off", note: "Replaces the end card you dropped: a glowing serif goodbye over the take, no buttons.", frames: 80, component: SignOff, round: 2 },
 ];

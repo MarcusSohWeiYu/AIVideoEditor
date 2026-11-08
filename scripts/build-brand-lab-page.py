@@ -6,9 +6,19 @@ import html, re, pathlib
 root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / "src/brand-lab/samples.tsx").read_text()
 kit = (root / ".claude/skills/remotion-reel/components/storyboard-review.html").read_text()
-pat = re.compile(r'\{ n: (\d+), group: "([^"]+)", title: "([^"]+)", note: "([^"]+)", frames: (\d+)')
-samples = [dict(n=int(a), group=b, title=c, note=d, frames=int(e)) for a, b, c, d, e in pat.findall(src)]
-assert len(samples) == 20, len(samples)
+pat = re.compile(r'\{ n: (\d+), group: "([^"]+)", title: "([^"]+)", note: "([^"]+)", frames: (\d+), component: \w+(?:, round: (\d+))?')
+allsamples = [dict(n=int(a), group=b, title=c, note=d, frames=int(e), round=int(r or 1)) for a, b, c, d, e, r in pat.findall(src)]
+ROUND = max(x["round"] for x in allsamples)
+samples = [x for x in allsamples if x["round"] == ROUND]
+assert samples, "no samples"
+
+# What changed since the last round, shown at the top of the page (edit per round).
+BANNER = {
+    2: """<section class="banner"><h2>Round 2, from your notes</h2>
+<p><b>Kept from round 1:</b> orange-block captions (1), bracket card hook (5), blueprint title (8), stat counter, drafted bars, checklist (11-13), blueprint flow, screenshot callout, project spec (14-16), sheet slide (18), name tag (19). These go into your brand sheet.</p>
+<p><b>Dropped:</b> dimension underline (4), grid wipe (17), end card (20, too corporate). <b>Too plain:</b> TikTok outline (2).</p>
+<p><b>New this round:</b> a second typeface, Instrument Serif, mixed into your kept styles: serif italic for the word that matters, with a soft glow over footage, after your two inspo images. Sample 24 retries the paper chip (your maybe) and sample 30 replaces the end card.</p></section>""",
+}
 
 DECIDES = {
     "Captions": "Your default caption style in BRAND.md.",
@@ -40,7 +50,7 @@ for s in samples:
 page = f'''<title>Brand Lab</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
 /* Layout: blueprint paper; a header like the site's, then a card grid of 9:16 clips grouped by what each group decides. */
 :root {{
@@ -97,6 +107,9 @@ article.beat {{ min-width: 0; background: var(--surface); border: 1px solid var(
 .dur {{ margin-left: auto; }}
 h3 {{ margin: 2px 0 0; font: 700 19px/1.25 var(--body); }}
 .note {{ margin: 0; color: var(--muted); font-size: 14px; }}
+.banner {{ margin: 0 0 30px; padding: 18px 22px; background: var(--surface); border: 1.5px solid var(--accent); border-radius: 2px; max-width: 78ch; display: flex; flex-direction: column; gap: 8px; }}
+.banner h2 {{ margin: 0; font: italic 400 34px/1.05 "Instrument Serif", Georgia, serif; color: var(--accent-deep); }}
+.banner p {{ margin: 0; font-size: 14.5px; }}
 .foot {{ margin-top: 26px; color: var(--muted); font-size: 13px; }}
 @media (max-width: 560px) {{ .beats {{ grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }} .info {{ padding: 10px 10px 12px; }} h3 {{ font-size: 16px; }} .note {{ font-size: 13px; }} }}
 @media (max-width: 380px) {{ .beats {{ grid-template-columns: 1fr; }} }}
@@ -107,18 +120,19 @@ h3 {{ margin: 2px 0 0; font: 700 19px/1.25 var(--body); }}
     <div class="mono" aria-hidden="true">WY</div>
     <h1>Brand Lab</h1>
   </header>
-  <p class="lede">Twenty three-second samples in your sohweiyu.com look: blueprint paper, burnt orange, Plus Jakarta Sans. Rate each one so I know which styles go into your brand sheet and which never show up in a reel.</p>
+  <p class="lede">Short samples in your sohweiyu.com look: blueprint paper, burnt orange, Plus Jakarta Sans. Rate each one so I know which styles go into your brand sheet and which never show up in a reel.</p>
   <p class="hand">The brown silhouette is stand-in footage. Your real take replaces it.</p>
+  {BANNER.get(ROUND, "")}
   <ul class="how">
     <li><b>Keep</b> use it as is</li>
     <li><b>Maybe</b> change it, and say how in the notes</li>
     <li><b>Drop</b> never use it</li>
     <li>Tap a clip to pause it</li>
   </ul>
-  <div class="beats" data-round="1">
+  <div class="beats" data-round="{ROUND}">
 {chr(10).join(cards)}
   </div>
-  <p class="foot">Samples 11 and 12 use placeholder numbers. Sample 16 uses the ApplyWise details from your site.</p>
+  <p class="foot">Instrument Serif is the closest free match to your inspo images, not necessarily the exact font in them.</p>
 </div>
 <script>
 (() => {{
@@ -139,4 +153,4 @@ h3 {{ margin: 2px 0 0; font: 700 19px/1.25 var(--body); }}
 '''
 out = root / "out/brand-lab/brand-lab.html"
 out.write_text(page + "\n" + kit)
-print(f"wrote {out.relative_to(root)} ({len(samples)} samples)")
+print(f"wrote {out.relative_to(root)} (round {ROUND}, {len(samples)} samples)")
