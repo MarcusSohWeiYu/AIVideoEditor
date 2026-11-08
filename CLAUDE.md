@@ -44,3 +44,18 @@ it in code.
 - Hook take: `public/recordings/Hook.MOV` on the Mac, not yet transcoded or
   edited. Its old `Hook.json` predates the `.words.json` naming; regenerate it
   from the mp4.
+
+## First local session: check before editing
+
+The project was set up in a cloud session; these steps on the Mac were not
+all confirmed. Check each, fix what's missing, then delete this section.
+
+1. `npm install` has run since the last pull (needs `@remotion/fonts`,
+   `@remotion/google-fonts`, `@remotion/bundler`, `@remotion/renderer`).
+2. `bin/whisper.cpp/models/` has `ggml-base.en.bin` and `ggml-small.bin`
+   (else `npm run setup:whisper`).
+3. `python3 -c "import numpy, PIL"` works (else `pip3 install numpy pillow`).
+4. `npm run lint` passes and `npm run dev` opens Studio with `Reel`,
+   `BrandSheet` and `BrandLab01`-`32`.
+5. Transcode every `.MOV` in `public/recordings/` to mp4 (skill, step 1),
+   transcribe it, and delete the stale `Hook.json`.
